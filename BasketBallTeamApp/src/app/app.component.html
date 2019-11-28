@@ -1,0 +1,38 @@
+<h1> Basketball Team App</h1>
+<br>
+<h2> Login</h2>
+<label for="email">Email:</label>
+<input type="text" class="form-control" placeholder="Email" id="email" required [(ngModel)]="emailValue" name="email"><br>
+<label for="password">Password</label>
+<input type="password" class="form-control" placeholder="Enter Password" id="password" [(ngModel)]="passwordValue"><br>
+<div>
+  <input type="button" value="Log in" (click)="login();">
+  <input type="button" value="Register" (click)="register();">
+  <input type="button" value="logout" (click)="logout();">
+</div>
+
+<div>
+  <h2> Game Details </h2>
+  <input type="time" placeholder="Time" [(ngModel)]="timeValue"><br>
+  <input type="date" placeholder="Date" [(ngModel)]="dateValue"><br>
+  <input type="text" placeholder="Venue" [(ngModel)]="venueValue"><br>
+  <input type="button" value="Log in" (click)="submitGame();">
+</div>
+
+<h2> Current/Upcoming Games</h2>
+<div *ngFor="let game of games | async">
+  <div *ngIf="currentEvents(game.date)">
+    <app-games [game-card]="game"></app-games>
+  </div>
+</div>
+
+<h2> Past Games</h2>
+<div *ngFor="let game of games | async">
+    <div *ngIf="pastEvents(game.date)">
+        <p>
+        Venue: {{game.venue}}<br>
+        Date: {{game.date}} <br>
+        Time: {{game.time}} <br>
+    </p>
+    </div>
+  </div>
