@@ -2,10 +2,15 @@
 <br>
 <h2> Login</h2>
 <label for="email">Email:</label>
-<input type="text" class="form-control" placeholder="Email" id="email" required [(ngModel)]="emailValue" name="email"><br>
+<input type="text" class="form-control" placeholder="Email" id="email" required [(ngModel)]="emailValue"
+  name="email"><br>
 <label for="password">Password</label>
 <input type="password" class="form-control" placeholder="Enter Password" id="password" [(ngModel)]="passwordValue"><br>
 <div>
+    <label for="name">Name</label><input type="text" class="form-control" placeholder="Name" id="mame" required [(ngModel)]="nameValue"
+    name="name"><br>
+
+
   <input type="button" value="Log in" (click)="login();">
   <input type="button" value="Register" (click)="register();">
   <input type="button" value="logout" (click)="logout();">
@@ -28,11 +33,31 @@
 
 <h2> Past Games</h2>
 <div *ngFor="let game of games | async">
-    <div *ngIf="pastEvents(game.date)">
-        <p>
-        Venue: {{game.venue}}<br>
-        Date: {{game.date}} <br>
-        Time: {{game.time}} <br>
+  <div *ngIf="pastEvents(game.date)">
+    <p>
+      Venue: {{game.venue}}<br>
+      Date: {{game.date}} <br>
+      Time: {{game.time}} <br>
+      Payee Name: {{game.payeeName}} <br>
+      Payee Amount: {{game.paymentAmount}} <br>
     </p>
-    </div>
   </div>
+</div>
+
+<h2> Payment per Person</h2>
+<div *ngFor="let player of players | async">
+    <p>
+        {{player.name}}: {{player.amountPaid}}<br>
+      
+    </p>
+</div>
+
+<h2> New Accounts</h2>
+<div *ngFor="let player of players | async">
+    <p>
+        {{player.name}}: <br>
+        verified: {{player.verified}}<br>
+        <input type="button" value="Reject" (click)="rejectUser(player.uid, player.verified);"> <input type="button" value="Accept" (click)="acceptUser(player.uid, player.verified);">
+      
+    </p>
+</div>

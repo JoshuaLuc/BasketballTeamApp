@@ -2,7 +2,7 @@
         Venue: {{gameData.venue}}<br>
         Date: {{gameData.date}} <br>
         Time: {{gameData.time}} <br>
-<input type="text" placeholder="Name" [(ngModel)]="nameValue"><br>
-<input type="text" placeholder="Amount" [(ngModel)]="amountValue"><br>
+<!-- <input type="text" placeholder="Name" [(ngModel)]="nameValue"><br> -->
+<input type="number" placeholder="Amount" [(ngModel)]="amountValue"><br>
 <input type="button" value="Fee Details" (click)="feeDetails(gameData.time,gameData.date,gameData.venue);"> 
 <input type="button" value="Forfeit" (click)="deleteGame(gameData.time,gameData.date,gameData.venue);"></p>

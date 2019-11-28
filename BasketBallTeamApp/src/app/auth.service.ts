@@ -39,21 +39,24 @@ export class AuthService {
 
   }
 
-  SignUp(email, password) {
+  SignUp(email, password, name) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        this.SetUserData(result.user);
+        this.SetUserData(result.user, name);
       }).catch((error) => {
         window.alert(error.message);
       });
   }
 
-  SetUserData(user) {
+  SetUserData(user, name) {
     const memberRef = this.db.list('/users/');
     memberRef.update( user.uid ,
     {
       uid: user.uid,
       email: user.email,
+      name: name,
+      amountPaid: 0,
+      verified: false
     });
   }
   SignOut() {

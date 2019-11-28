@@ -9,15 +9,18 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   games: Observable<any[]>;
+  players: Observable<any[]>;
   title = 'BasketBallTeamApp';
   userRef: AngularFireList<any>
   currentDate  = new Date();
+  userData: AngularFireList<any>
   public userInfo;
   public timeValue;
   public dateValue;
   public venueValue;
   public emailValue;
   public passwordValue;
+  public nameValue;
   constructor(
     public authService: AuthService,
     public db: AngularFireDatabase,
@@ -25,6 +28,7 @@ export class AppComponent {
 
   ngOnInit(){
     this.games = this.db.list('games' ).valueChanges();
+    this.players = this.db.list('users' ).valueChanges();
   }
   login() {
     console.log('Login() Called')
@@ -33,7 +37,7 @@ export class AppComponent {
 
   register() {
     console.log('Register() Called')
-    this.authService.SignUp(this.emailValue, this.passwordValue)
+    this.authService.SignUp(this.emailValue, this.passwordValue, this.nameValue)
   }
 
   logout() {
@@ -96,4 +100,53 @@ export class AppComponent {
         return false;
       }
     }
-}
+
+    acceptUser(id, userVerified){
+      if(userVerified != true){
+      console.log('User Accepted')
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.userData = this.db.list('/users', ref => ref.equalTo(user.uid).orderByKey())
+    this.userData.snapshotChanges(['child_added'])
+      .subscribe(actions => {
+        actions.forEach(action => {
+          this.userInfo = action.payload.val();
+        if(this.userInfo.verified == true){
+          const userRef = this.db.list('/users/');
+           
+          userRef.update(id,
+                  {
+                    verified: true,
+                  });
+        }
+        else{
+          console.log('user is not verified')
+        }
+        
+        })})
+      }
+    }
+    rejectUser(id, userVerified){
+      if(userVerified != true){
+      console.log('User Accepted')
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.userData = this.db.list('/users', ref => ref.equalTo(user.uid).orderByKey())
+    this.userData.snapshotChanges(['child_added'])
+      .subscribe(actions => {
+        actions.forEach(action => {
+          this.userInfo = action.payload.val();
+        if(this.userInfo.verified == true){
+          const userRef = this.db.list('/users/');
+           
+          userRef.update(id,
+                  {
+                    verified: 'Rejected',
+                  });
+        }
+        else{
+          console.log('user is not verified')
+        }
+        
+        })})
+     
+    }
+}}
