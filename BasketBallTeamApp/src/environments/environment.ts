@@ -5,15 +5,7 @@
 export const environment = {
   production: false,
   firebase:{
-    apiKey: "AIzaSyABqK8iGDoatuGjZCDQnlvWwAztpp7k4Xo",
-    authDomain: "basketballchal.firebaseapp.com",
-    databaseURL: "https://basketballchal.firebaseio.com",
-    projectId: "basketballchal",
-    storageBucket: "basketballchal.appspot.com",
-    messagingSenderId: "571396262585",
-    appId: "1:571396262585:web:3fc8016eab47e713242968",
-    measurementId: "G-3X99RRKEFT"
-
+   //put firebase config options here
   }
 };
 
